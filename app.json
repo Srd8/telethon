@@ -1,0 +1,69 @@
+{
+  "name": "سورس كيتو",: "دائما الاول"
+  "description": "تنصيب سورس كيتو ",
+  "photo": "https://telegra.ph/file/1419d0015ff39ce626cce.jpg",
+  "keywords": [    "plugin",    "modular",    "productivity"  ],
+  "repository": "https://github.com/Srd8/telethon/network/members",
+  "website": "#TODO",
+  "success_url": "#TODO",
+  "env": {
+    "ALIVE_NAME": {
+      "description": "ضع اسمك الذي في تليجرام",
+      "value": ""
+    },
+    "APP_ID": {
+      "description": "ضع الايبي ايدي هنا",
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "ضع الايبي هاش هنا",
+      "value": ""
+    },
+    "STRING_SESSION": {
+      "description": "ضع كود تيرمكس هنا",
+      "value": ""
+    },
+    "TG_BOT_USERNAME": {
+      "description": " ضع معرف البوت هنا",
+      "value": ""
+    },
+    "TG_BOT_TOKEN": {
+      "description": "ضع توكن البوت هنا",
+      "value": ""
+    },
+    "TZ": {
+      "description": " الوقت",
+      "value": "Asia/Baghdad",
+      "required": false
+    },
+    "UPSTREAM_REPO": {
+      "description": "لاتـغيره! ",
+      "value": "Telethon",
+    "required": false
+   },
+   "HNDLR": "لبحث او تشغيل الاوامر",
+   "value": ". ضع"
+   "required"
+  },
+  "addons": [{
+    "plan": "heroku-postgresql",
+    "options": {
+      "version": "12"
+    }
+  }],
+  "buildpacks": [{
+    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+  },{
+    "url":"https://github.com/heroku/heroku-buildpack-google-chrome"
+  },{
+    "url":"https://github.com/heroku/heroku-buildpack-chromedriver"
+  },{
+    "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"
+  },{
+    "url": "https://github.com/heroku/heroku-buildpack-apt.git"
+  },{
+    "url": "https://github.com/chrismytton/heroku-buildpack-jq"
+  },{
+    "url": "heroku/python"
+  }]
+}
