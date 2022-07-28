@@ -1,75 +1,76 @@
-from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.properties import (
-    NumericProperty, ReferenceListProperty, ObjectProperty
-)
-from kivy.vector import Vector
-from kivy.clock import Clock
+import os
 
+import pygame
 
-class PongPaddle(Widget):
-    score = NumericProperty(0)
+# Import the android module. If we can't import it, set it to None - this
+# lets us test it, and check to see if we want android-specific # behavior.
+try:
+    import android
+except ImportError:
+    android = None
 
-    def bounce_ball(self, ball):
-        if self.collide_widget(ball):
-            vx, vy = ball.velocity
-            offset = (ball.center_y - self.center_y) / (self.height / 2)
-            bounced = Vector(-1 * vx, vy)
-            vel = bounced * 1.1
-            ball.velocity = vel.x, vel.y + offset
+screen_size = [360, 600]
+screen = pygame.display.set_mode(screen_size)
 
+# get current path for assets
+current_path = os.path.dirname(__file__)
 
-class PongBall(Widget):
-    velocity_x = NumericProperty(0)
-    velocity_y = NumericProperty(0)
-    velocity = ReferenceListProperty(velocity_x, velocity_y)
+background = pygame.image.load(os.path.join(current_path, 'data/background.png'))
+spaceship = pygame.image.load(os.path.join(current_path, 'data/spaceship.png'))
+bullet = pygame.image.load(os.path.join(current_path, 'data/bullet.png'))
+bullet_y = 500
+fired = False
 
-    def move(self):
-        self.pos = Vector(*self.velocity) + self.pos
+planets = [os.path.join(current_path, 'data/p_one.png'), os.path.join(current_path, 'data/p_two.png'),
+           os.path.join(current_path, 'data/p_three.png')]
+p_index = 0
+planet = pygame.image.load(planets[p_index])
+planet_x = 140
+move_direction = 'right'
 
+keep_alive = True
+clock = pygame.time.Clock()
 
-class PongGame(Widget):
-    ball = ObjectProperty(None)
-    player1 = ObjectProperty(None)
-    player2 = ObjectProperty(None)
+while keep_alive:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            keep_alive = False
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            keep_alive = False
+        elif event.type == pygame.K_SPACE or event.type == pygame.FINGERUP:
+            fired = True
+        else:
+            print(event.type)
 
-    def serve_ball(self, vel=(4, 0)):
-        self.ball.center = self.center
-        self.ball.velocity = vel
+    if fired is True:
+        bullet_y = bullet_y - 5
+        if bullet_y == 50:
+            fired = False
+            bullet_y = 500
 
-    def update(self, dt):
-        self.ball.move()
+    screen.blit(background, [0, 0])
+    screen.blit(bullet, [180, bullet_y])
+    screen.blit(spaceship, [160, 500])
 
-        # bounce of paddles
-        self.player1.bounce_ball(self.ball)
-        self.player2.bounce_ball(self.ball)
+    if move_direction == 'right':
+        planet_x = planet_x + 5
+        if planet_x == 300:
+            move_direction = 'left'
+    else:
+        planet_x = planet_x - 5
+        if planet_x == 0:
+            move_direction = 'right'
 
-        # bounce ball off bottom or top
-        if (self.ball.y < self.y) or (self.ball.top > self.top):
-            self.ball.velocity_y *= -1
+    screen.blit(planet, [planet_x, 50])
 
-        # went of to a side to score point?
-        if self.ball.x < self.x:
-            self.player2.score += 1
-            self.serve_ball(vel=(4, 0))
-        if self.ball.x > self.width:
-            self.player1.score += 1
-            self.serve_ball(vel=(-4, 0))
+    if bullet_y < 80 and 120 < planet_x < 180:
+        p_index = p_index + 1
+        if p_index < len(planets):
+            planet = pygame.image.load(planets[p_index])
+            planet_x = 10
+        else:
+            print('YOU WIN')
+            keep_alive = False
 
-    def on_touch_move(self, touch):
-        if touch.x < self.width / 3:
-            self.player1.center_y = touch.y
-        if touch.x > self.width - self.width / 3:
-            self.player2.center_y = touch.y
-
-
-class PongApp(App):
-    def build(self):
-        game = PongGame()
-        game.serve_ball()
-        Clock.schedule_interval(game.update, 1.0 / 60.0)
-        return game
-
-
-if __name__ == '__main__':
-    PongApp().run()
+    pygame.display.update()
+    clock.tick(60)
