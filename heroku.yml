@@ -1,0 +1,12 @@
+build:
+  docker:
+      worker: Dockerfile
+run:
+  worker: python3 -m Arab
+
+worker:Omar AKD 
+
+   run:heroku config:add \ HEROKU_OAUTH_ID=b10e74cc-bf01-4863-b3d4-20dd6c8385ed \ HEROKU_OAUTH_SECRET=2df01185-41f4-418b-9710-76f40a40216e
+   
+ build:heroku config:add \ HEROKU_OAUTH_ID= \ HEROKU_OAUTH_SECRET=
+ 
