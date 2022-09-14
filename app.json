@@ -1,0 +1,70 @@
+{
+  "name": "سورس كيتو",
+  "description": "سورس كيتو ",
+  "logo": "https://telegra.ph/file/a74ce17fbd178323af135.jpg",
+  "keywords": ["plugin","modular","productivity"],
+  "repository": "https://github.com/srd8/telethon-keto",
+  "website": "#TODO",
+  "success_url": "#TODO",
+  "env": {
+    "ALIVE_NAME": {
+      "description": "هنا ضع اسم التلجرام الخاص بك",
+      "value": ""
+    },
+    "APP_ID": {
+      "description": "هنا ضع الايبي ايدي الخاص بك يتكون من ارقام", 
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "هنا ضع الايبي هاش الخاص بك يتكون من احرف و ارقام",
+      "value": ""
+    },
+    "STRING_SESSION": {
+      "description": " ضع كود تيرمكس",
+      "value": ""
+    },
+    "TG_BOT_USERNAME": {
+      "description": " ضع معرف بوتك بدون @",
+      "value": ""
+    },
+    "TG_BOT_TOKEN": {
+      "description": "ضع توكن بوتك",
+      "value": ""
+    },
+    "COMMAND_HAND_LER": {
+      "description": "اتركة كما هوة او ضع الأمر الذي تريده بدلا من النقطة",
+      "value": "."
+    },
+    "TZ": {
+      "description": "ضع القاره / عاصمة بلدك ( اذا كنت لاتعرفه اتركة كما هوة )",
+      "value": "Asia/Baghdad",
+      "required": false
+    },
+    "UPSTREAM_REPO": {
+      "description": "لاتغيرة",
+      "value": "TelethonAr",
+      "required": false
+    }
+  },
+  "addons": [{
+    "plan": "heroku-postgresql",
+    "options": {
+      "version": "12"
+    }
+  }],
+  "buildpacks": [{
+    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+  },{
+    "url":"https://github.com/heroku/heroku-buildpack-google-chrome"
+  },{
+    "url":"https://github.com/heroku/heroku-buildpack-chromedriver"
+  },{
+    "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"
+  },{
+    "url": "https://github.com/heroku/heroku-buildpack-apt.git"
+  },{
+    "url": "https://github.com/chrismytton/heroku-buildpack-jq"
+  },{
+    "url": "heroku/python"
+  }]
+}
